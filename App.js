@@ -1,14 +1,17 @@
 import "./App.css";
-import { useState } from "react";
 import Login from "./Login";
+import useLocalStorage from "../hooks/useLocalStorage";
+import Dashboard from "./Dashboard";
+import { ContactsProvider } from "./Context/ContactsProvider";
+
 function App() {
-  const [id, setId] = useState(1);
-  return (
-    <div className="App">
-      {id}
-      <Login onIdSubmit={setId} />
-    </div>
+  const [id, setId] = useLocalStorage("ulugbek's-id");
+  const dashboard = (
+    <ContactsProvider>
+      <Dashboard id={id} />
+    </ContactsProvider>
   );
+  return id ? dashboard : <Login onIdSubmit={setId} />;
 }
 
 export default App;
